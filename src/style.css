@@ -19,7 +19,7 @@ body {
   height: 70vh;
   margin-top: 100px;
   display: grid;
-  grid-template-rows: 1fr 1fr 2fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
   justify-items: start;
   align-items: center;
   box-shadow:
@@ -43,8 +43,8 @@ body {
 .items {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 .items:nth-child(3n+0) {
@@ -86,8 +86,7 @@ body {
 .task {
   padding: 0 2%;
   font-size: 22px;
-  display: flex;
-  justify-content: flex-start;
+  flex: 0 0 33.33%;
   column-gap: 2%;
 }
 

@@ -1,21 +1,12 @@
 import './style.css';
+import Tasks from './tasks.js';
 
-const tasks = [];
-
-class Task {
-  constructor(description, completed, index) {
-    this.description = description;
-    this.completed = completed;
-    this.index = index;
-  }
-}
-
-tasks.push(new Task('wash the dishes', false, 2), new Task('fix car', false, 3), new Task('buy food', false, 1));
-tasks.sort((a, b) => a.index - b.index);
+const toDoList = new Tasks();
 
 const populate = () => {
   const items = document.querySelector('.items');
-  for (let i = 0; i < tasks.length; i += 1) {
+  items.replaceChildren();
+  for (let i = 0; i < toDoList.arrayTasks.length; i += 1) {
     const div = document.createElement('div');
     div.className = 'task';
     const box = document.createElement('input');
@@ -23,7 +14,7 @@ const populate = () => {
     box.className = 'checkbox';
     div.appendChild(box);
     const task = document.createElement('p');
-    const taskText = document.createTextNode(tasks[i].description);
+    const taskText = document.createTextNode(toDoList.arrayTasks[i].description);
     task.appendChild(taskText);
     div.appendChild(task);
     const ellipsis = document.createElement('i');
@@ -34,5 +25,11 @@ const populate = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  populate();
+});
+
+document.querySelector('.addTaskText').addEventListener('change', (e) => {
+  toDoList.addTask(e.target.value);
+  e.target.value = '';
   populate();
 });
