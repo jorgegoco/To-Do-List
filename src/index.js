@@ -21,14 +21,14 @@ const populate = () => {
     box.className = 'checkbox';
     div.appendChild(box);
     const task = document.createElement('p');
-    const taskText = document.createTextNode(tasks[i]['description']);
+    const taskText = document.createTextNode(tasks[i].description);
     task.appendChild(taskText);
     div.appendChild(task);
     const ellipsis = document.createElement('i');
-    ellipsis.className = "fa fa-ellipsis-v";
+    ellipsis.className = 'fa fa-ellipsis-v';
     div.appendChild(ellipsis);
     items.appendChild(div);
   }
-}
+};
 
 populate();
