@@ -33,4 +33,6 @@ const populate = () => {
   }
 };
 
-populate();
+document.addEventListener('DOMContentLoaded', () => {
+  populate();
+});
