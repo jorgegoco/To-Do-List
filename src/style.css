@@ -99,6 +99,7 @@ body {
 .fa-ellipsis-v {
   margin-left: auto;
   color: lightgray;
+  cursor: pointer;
 }
 
 .footer {

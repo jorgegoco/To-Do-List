@@ -10,11 +10,11 @@ export default class Tasks {
     }
   }
 
-  removeTask = (description) => {
+  removeTask = (index) => {
     for (let i = 0; i < this.arrayTasks.length; i += 1) {
-      if (this.arrayTasks[i].description === description) {
-        this.arrayTasks.splice(index, 1);
-        for (let j = i; j < this.arrayTasks.length; i += 1) {
+      if (this.arrayTasks[i].index === index) {
+        this.arrayTasks.splice(this.arrayTasks[i].index - 1, 1);
+        for (let j = i; j < this.arrayTasks.length; j += 1) {
           this.arrayTasks[j].index = j + 1;
         }
       }

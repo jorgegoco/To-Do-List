@@ -19,9 +19,18 @@ const populate = () => {
     div.appendChild(task);
     const ellipsis = document.createElement('i');
     ellipsis.className = 'fa fa-ellipsis-v';
+    ellipsis.id = toDoList.arrayTasks[i].index;
     div.appendChild(ellipsis);
     items.appendChild(div);
   }
+  const allEllipsisIcons = Array.from(document.querySelectorAll('.fa-ellipsis-v'));
+  allEllipsisIcons.forEach((ellipsisIcon) => {
+    ellipsisIcon.addEventListener('click', () => {
+      let indexIcon = parseInt(ellipsisIcon.id);
+      toDoList.removeTask(indexIcon);
+      populate();
+    })
+  })
 };
 
 document.addEventListener('DOMContentLoaded', () => {
