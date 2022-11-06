@@ -67,6 +67,8 @@ body {
 }
 
 .addTaskText {
+  width: 90%;
+  line-height: 200%;
   font-style: italic;
   background-color: transparent;
 }
@@ -96,9 +98,24 @@ body {
   border: 2px;
 }
 
+.taskToDo {
+  width: 100%;
+  line-height: 200%;
+  background-color: transparent;
+  font-size: 22px;
+}
+
+.taskToDo:focus {
+  outline: none;
+}
+
 .fa-ellipsis-v {
-  margin-left: auto;
   color: lightgray;
+  cursor: move;
+}
+
+.fa-trash-o {
+  color: rgb(160, 159, 159);
   cursor: pointer;
 }
 

@@ -22,6 +22,11 @@ export default class Tasks {
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
 
+  updateTask = (index, description) => {
+    this.arrayTasks[index - 1].description = description;
+    localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
+  }
+
   showDescriptions = () => {
     let descriptions = [];
     for (let i = 0; i < this.arrayTasks.length; i += 1)
