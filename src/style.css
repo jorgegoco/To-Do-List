@@ -19,7 +19,7 @@ body {
   height: 70vh;
   margin-top: 100px;
   display: grid;
-  grid-template-rows: 1fr 1fr 2fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
   justify-items: start;
   align-items: center;
   box-shadow:
@@ -43,8 +43,8 @@ body {
 .items {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 .items:nth-child(3n+0) {
@@ -67,6 +67,8 @@ body {
 }
 
 .addTaskText {
+  width: 90%;
+  line-height: 200%;
   font-style: italic;
   background-color: transparent;
 }
@@ -86,8 +88,7 @@ body {
 .task {
   padding: 0 2%;
   font-size: 22px;
-  display: flex;
-  justify-content: flex-start;
+  flex: 0 0 33.33%;
   column-gap: 2%;
 }
 
@@ -97,9 +98,25 @@ body {
   border: 2px;
 }
 
+.taskToDo {
+  width: 100%;
+  line-height: 200%;
+  background-color: transparent;
+  font-size: 22px;
+}
+
+.taskToDo:focus {
+  outline: none;
+}
+
 .fa-ellipsis-v {
-  margin-left: auto;
   color: lightgray;
+  cursor: move;
+}
+
+.fa-trash-o {
+  color: rgb(160, 159, 159);
+  cursor: pointer;
 }
 
 .footer {
