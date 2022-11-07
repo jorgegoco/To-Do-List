@@ -22,9 +22,6 @@ export default class Tasks {
         }
       }
     }
-    // for(let i = 0; i < this.arrayTasks.length; i += 1){
-    //   this.arrayTasks[i].completed = false;
-    // }
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
 
