@@ -105,6 +105,10 @@ body {
   font-size: 22px;
 }
 
+.taskToDoChecked {
+  text-decoration: line-through;
+}
+
 .taskToDo:focus {
   outline: none;
 }
@@ -126,4 +130,5 @@ body {
 
 .footerText {
   color: rgb(169, 167, 167);
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import './style.css';
 import Tasks from './tasks.js';
+import deleteChecked from './checkbox';
 
 const toDoList = new Tasks();
 
@@ -14,11 +15,19 @@ function populate() {
     box.type = 'checkbox';
     box.className = 'checkbox';
     box.id = `checkbox${toDoList.arrayTasks[i].index}`;
+    box.checked = toDoList.arrayTasks[i].completed;
     div.appendChild(box);
     const task = document.createElement('input');
     task.className = 'taskToDo';
     task.id = `taskToDo${toDoList.arrayTasks[i].index}`;
     task.value = toDoList.arrayTasks[i].description;
+    if(box.checked) {
+      task.classList.add('taskToDoChecked');
+      task.style.color = 'rgb(175,175,175)';
+    } else {
+      task.classList.remove('taskToDoChecked');
+      task.style.color = 'inherit';
+    }
     div.appendChild(task);
     const ellipsis = document.createElement('i');
     ellipsis.className = 'fa fa-ellipsis-v';
@@ -28,6 +37,8 @@ function populate() {
   }
   const allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
   const allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
+  const allCheckboxesTasksToDo = Array.from(document.querySelectorAll('.checkbox'));
+
 
   allTasksToDo.forEach((taskToDo) => {
     if (taskToDo.parentNode.style.backgroundColor !== 'rgb(255, 255, 200)') {
@@ -44,7 +55,7 @@ function populate() {
   document.addEventListener('click', (e) => {
     allTasksToDo.forEach((taskToDo) => {
       if (taskToDo.parentNode.style.backgroundColor === 'rgb(255, 255, 200)' && e.target !== taskToDo && e.target !== taskToDo.nextElementSibling) {
-        taskToDo.parentNode.style.backgroundColor = 'initial';
+        taskToDo.parentNode.style.backgroundColor = 'inherit';
         taskToDo.nextElementSibling.className = 'fa fa-ellipsis-v';
       }
     });
@@ -60,6 +71,29 @@ function populate() {
       }
     });
   });
+
+  allCheckboxesTasksToDo.forEach((checkboxTaskToDo) => {
+    checkboxTaskToDo.addEventListener('change', () => {
+      let checkboxIndex = Number(checkboxTaskToDo.id.replace(/\D/g, ''));
+      if (checkboxTaskToDo.checked) {
+        toDoList.arrayTasks[checkboxIndex - 1].completed = true;
+        checkboxTaskToDo.nextElementSibling.style.color = 'rgb(175,175,175)';
+        checkboxTaskToDo.nextElementSibling.classList.add('taskToDoChecked');
+
+      } else {
+        toDoList.arrayTasks[checkboxIndex - 1].completed = false;
+        checkboxTaskToDo.nextElementSibling.style.color = 'inherit';
+        checkboxTaskToDo.nextElementSibling.classList.remove('taskToDoChecked');
+      }
+      localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks))
+    });
+  });
+
+  document.querySelector('.footerText').addEventListener('click', () => {
+    deleteChecked(toDoList);
+    toDoList.arrayTasks = JSON.parse(localStorage.getItem('tasksData'));
+    populate();
+  })
 }
 
 populate();

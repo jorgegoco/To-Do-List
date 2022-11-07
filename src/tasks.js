@@ -6,6 +6,9 @@ export default class Tasks {
   addTask = (description, completed = false, index = this.arrayTasks.length + 1) => {
     if (!this.showDescriptions().find((element) => element === description)) {
       this.arrayTasks.push({ description, completed, index });
+      // for(let i = 0; i < this.arrayTasks.length; i += 1){
+      //   this.arrayTasks[i].completed = false;
+      // }
       localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
     }
   }
@@ -19,6 +22,9 @@ export default class Tasks {
         }
       }
     }
+    // for(let i = 0; i < this.arrayTasks.length; i += 1){
+    //   this.arrayTasks[i].completed = false;
+    // }
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
 
