@@ -1,6 +1,6 @@
 import './style.css';
 import Tasks from './tasks.js';
-import deleteChecked from './checkbox';
+import deleteChecked from './checkbox.js';
 
 const toDoList = new Tasks();
 
@@ -21,7 +21,7 @@ function populate() {
     task.className = 'taskToDo';
     task.id = `taskToDo${toDoList.arrayTasks[i].index}`;
     task.value = toDoList.arrayTasks[i].description;
-    if(box.checked) {
+    if (box.checked) {
       task.classList.add('taskToDoChecked');
       task.style.color = 'rgb(175,175,175)';
     } else {
@@ -38,7 +38,6 @@ function populate() {
   const allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
   const allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
   const allCheckboxesTasksToDo = Array.from(document.querySelectorAll('.checkbox'));
-
 
   allTasksToDo.forEach((taskToDo) => {
     if (taskToDo.parentNode.style.backgroundColor !== 'rgb(255, 255, 200)') {
@@ -74,18 +73,17 @@ function populate() {
 
   allCheckboxesTasksToDo.forEach((checkboxTaskToDo) => {
     checkboxTaskToDo.addEventListener('change', () => {
-      let checkboxIndex = Number(checkboxTaskToDo.id.replace(/\D/g, ''));
+      const checkboxIndex = Number(checkboxTaskToDo.id.replace(/\D/g, ''));
       if (checkboxTaskToDo.checked) {
         toDoList.arrayTasks[checkboxIndex - 1].completed = true;
         checkboxTaskToDo.nextElementSibling.style.color = 'rgb(175,175,175)';
         checkboxTaskToDo.nextElementSibling.classList.add('taskToDoChecked');
-
       } else {
         toDoList.arrayTasks[checkboxIndex - 1].completed = false;
         checkboxTaskToDo.nextElementSibling.style.color = 'inherit';
         checkboxTaskToDo.nextElementSibling.classList.remove('taskToDoChecked');
       }
-      localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks))
+      localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
     });
   });
 
@@ -93,7 +91,7 @@ function populate() {
     deleteChecked(toDoList);
     toDoList.arrayTasks = JSON.parse(localStorage.getItem('tasksData'));
     populate();
-  })
+  });
 }
 
 populate();
