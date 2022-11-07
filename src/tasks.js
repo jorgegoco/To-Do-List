@@ -4,7 +4,7 @@ export default class Tasks {
   }
 
   addTask = (description, completed = false, index = this.arrayTasks.length + 1) => {
-    if (!this.showDescriptions().find(element => element === description)) {
+    if (!this.showDescriptions().find((element) => element === description)) {
       this.arrayTasks.push({ description, completed, index });
       localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
     }
@@ -28,10 +28,10 @@ export default class Tasks {
   }
 
   showDescriptions = () => {
-    let descriptions = [];
-    for (let i = 0; i < this.arrayTasks.length; i += 1)
+    const descriptions = [];
+    for (let i = 0; i < this.arrayTasks.length; i += 1) {
       descriptions.push(this.arrayTasks[i].description);
+    }
     return descriptions.reverse();
   }
 }
-

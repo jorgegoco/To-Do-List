@@ -26,21 +26,19 @@ function populate() {
     div.appendChild(ellipsis);
     items.appendChild(div);
   }
-  let allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
-  let allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
+  const allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
+  const allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
 
   allTasksToDo.forEach((taskToDo) => {
     if (taskToDo.parentNode.style.backgroundColor !== 'rgb(255, 255, 200)') {
       taskToDo.addEventListener('click', () => {
         taskToDo.parentNode.style.backgroundColor = 'rgb(255, 255, 200)';
         taskToDo.nextElementSibling.className = 'fa fa-trash-o fa-lg';
-        taskToDo.addEventListener('input', function update(ev) {
-          console.log(Number(taskToDo.id.replace(/\D/g, '')));
+        taskToDo.addEventListener('input', (ev) => {
           toDoList.updateTask(Number(taskToDo.id.replace(/\D/g, '')), ev.target.value);
         });
       });
     }
-
   });
 
   document.addEventListener('click', (e) => {
@@ -48,7 +46,7 @@ function populate() {
       if (taskToDo.parentNode.style.backgroundColor === 'rgb(255, 255, 200)' && e.target !== taskToDo && e.target !== taskToDo.nextElementSibling) {
         taskToDo.parentNode.style.backgroundColor = 'initial';
         taskToDo.nextElementSibling.className = 'fa fa-ellipsis-v';
-      };
+      }
     });
   });
 
@@ -59,7 +57,7 @@ function populate() {
         iconTaskToDo.className = 'fa fa-ellipsis-v';
         toDoList.removeTask(Number(iconTaskToDo.id.replace(/\D/g, '')));
         populate();
-      };
+      }
     });
   });
 }
