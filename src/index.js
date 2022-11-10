@@ -38,6 +38,7 @@ function populate() {
   const allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
   const allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
   const allCheckboxesTasksToDo = Array.from(document.querySelectorAll('.checkbox'));
+  const allTasks = Array.from(document.querySelectorAll('.task'));
 
   allTasksToDo.forEach((taskToDo) => {
     if (taskToDo.parentNode.style.backgroundColor !== 'rgb(255, 255, 200)') {
@@ -92,6 +93,54 @@ function populate() {
     toDoList.arrayTasks = JSON.parse(localStorage.getItem('tasksData'));
     populate();
   });
+
+  let current = null;
+
+  for (let i of allTasks) {
+
+    i.draggable = true;
+
+    i.addEventListener('dragstart', () => current = i);
+
+    i.addEventListener('dragover', evt => evt.preventDefault());
+
+    i.addEventListener('drop', evt => {
+      evt.preventDefault();
+      if (i != current) {
+        let currentpos = 0, droppedpos = 0;
+        for (let it = 0; it < allTasks.length; it++) {
+          if (current == allTasks[it])
+            currentpos = it;
+          if (i == allTasks[it])
+            droppedpos = it;
+        }
+        if (currentpos < droppedpos) {
+          for (let j = currentpos; j < droppedpos; j += 1) {
+            const temp = toDoList.arrayTasks[j];
+            toDoList.arrayTasks[j] = toDoList.arrayTasks[j + 1];
+            toDoList.arrayTasks[j + 1] = temp;
+          }
+          for (let j = 0; j < toDoList.arrayTasks.length; j += 1) {
+            toDoList.arrayTasks[j].index = j + 1;
+          }
+          localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
+          populate();
+
+        } else {
+          for (let j = currentpos; j > droppedpos; j -= 1) {
+            const temp = toDoList.arrayTasks[j];
+            toDoList.arrayTasks[j] = toDoList.arrayTasks[j - 1];
+            toDoList.arrayTasks[j - 1] = temp;
+          }
+          for (let j = 0; j < toDoList.arrayTasks.length; j += 1) {
+            toDoList.arrayTasks[j].index = j + 1;
+          }
+          localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
+          populate();
+        }
+      };
+    });
+  };
 }
 
 populate();
