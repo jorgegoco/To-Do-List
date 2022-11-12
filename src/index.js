@@ -87,9 +87,7 @@ function populate() {
     populate();
   });
 
-
-  //                DRAG AND DROP FUNCTIONALITY            
-
+  //                DRAG AND DROP FUNCTIONALITY
 
   let current = null;
 
@@ -115,10 +113,7 @@ function populate() {
     });
   });
 
-
-  //            END OF DRAG AND DROP FUNCTIONALITY  
-
-
+  //            END OF DRAG AND DROP FUNCTIONALITY
 }
 
 populate();

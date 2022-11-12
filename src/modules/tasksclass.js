@@ -62,7 +62,7 @@ export default class Tasks {
     }
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
-    
+
   showDescriptions = () => {
     const descriptions = [];
     for (let i = 0; i < this.arrayTasks.length; i += 1) {
