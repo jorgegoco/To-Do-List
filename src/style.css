@@ -111,7 +111,7 @@ body {
 
 .taskToDoChecked {
   text-decoration: line-through;
-  color: rgb(175,175,175);
+  color: rgb(175, 175, 175);
 }
 
 .taskToDo:focus {

@@ -8,7 +8,6 @@ function populate() {
   const items = document.querySelector('.items');
   items.replaceChildren();
   for (let i = 0; i < toDoList.arrayTasks.length; i += 1) {
-
     const div = document.createElement('div');
     div.className = 'task';
     div.id = `task${i + 1}`;
@@ -22,7 +21,11 @@ function populate() {
     task.className = 'taskToDo';
     task.id = `taskToDo${i + 1}`;
     task.value = toDoList.arrayTasks[i].description;
-    box.checked ? task.classList.add('taskToDoChecked') : task.classList.remove('taskToDoChecked');
+    if (box.checked) {
+      task.classList.add('taskToDoChecked');
+    } else {
+      task.classList.remove('taskToDoChecked');
+    }
     div.appendChild(task);
     const ellipsis = document.createElement('i');
     ellipsis.className = 'fa fa-ellipsis-v';
@@ -86,7 +89,6 @@ function populate() {
 
   /*
                   DRAG AND DROP FUNCTIONALITY            */
-
 
   let current = null;
 
