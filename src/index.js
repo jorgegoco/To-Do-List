@@ -1,6 +1,6 @@
 import './style.css';
-import Tasks from './tasks.js';
-import deleteChecked from './checkbox.js';
+import Tasks from './modules/tasksclass.js';
+import idNumber from './modules/utilities.js';
 
 const toDoList = new Tasks();
 
@@ -10,52 +10,49 @@ function populate() {
   for (let i = 0; i < toDoList.arrayTasks.length; i += 1) {
     const div = document.createElement('div');
     div.className = 'task';
-    div.id = `task${toDoList.arrayTasks[i].index}`;
+    div.id = `task${i + 1}`;
     const box = document.createElement('input');
     box.type = 'checkbox';
     box.className = 'checkbox';
-    box.id = `checkbox${toDoList.arrayTasks[i].index}`;
+    box.id = `checkbox${i + 1}`;
     box.checked = toDoList.arrayTasks[i].completed;
     div.appendChild(box);
     const task = document.createElement('input');
     task.className = 'taskToDo';
-    task.id = `taskToDo${toDoList.arrayTasks[i].index}`;
+    task.id = `taskToDo${i + 1}`;
     task.value = toDoList.arrayTasks[i].description;
     if (box.checked) {
       task.classList.add('taskToDoChecked');
-      task.style.color = 'rgb(175,175,175)';
     } else {
       task.classList.remove('taskToDoChecked');
-      task.style.color = 'inherit';
     }
     div.appendChild(task);
     const ellipsis = document.createElement('i');
     ellipsis.className = 'fa fa-ellipsis-v';
-    ellipsis.id = `ellipsis${toDoList.arrayTasks[i].index}`;
+    ellipsis.id = `ellipsis${i + 1}`;
     div.appendChild(ellipsis);
     items.appendChild(div);
   }
+
+  const allTasks = Array.from(document.querySelectorAll('.task'));
+  const allCheckboxesTasksToDo = Array.from(document.querySelectorAll('.checkbox'));
   const allTasksToDo = Array.from(document.querySelectorAll('.taskToDo'));
   const allIconsTasksToDo = Array.from(document.querySelectorAll('.fa-ellipsis-v, .fa-trash-o'));
-  const allCheckboxesTasksToDo = Array.from(document.querySelectorAll('.checkbox'));
-  const allTasks = Array.from(document.querySelectorAll('.task'));
 
   allTasksToDo.forEach((taskToDo) => {
-    if (taskToDo.parentNode.style.backgroundColor !== 'rgb(255, 255, 200)') {
+    if (!taskToDo.parentNode.classList.contains('highlightedTask')) {
       taskToDo.addEventListener('click', () => {
-        taskToDo.parentNode.style.backgroundColor = 'rgb(255, 255, 200)';
+        taskToDo.parentNode.classList.add('highlightedTask');
         taskToDo.nextElementSibling.className = 'fa fa-trash-o fa-lg';
-        taskToDo.addEventListener('input', (ev) => {
-          toDoList.updateTask(Number(taskToDo.id.replace(/\D/g, '')), ev.target.value);
-        });
       });
     }
+    taskToDo.addEventListener('input', (e) => toDoList.updateTask(idNumber(taskToDo.id), e.target.value));
   });
 
   document.addEventListener('click', (e) => {
     allTasksToDo.forEach((taskToDo) => {
-      if (taskToDo.parentNode.style.backgroundColor === 'rgb(255, 255, 200)' && e.target !== taskToDo && e.target !== taskToDo.nextElementSibling) {
-        taskToDo.parentNode.style.backgroundColor = 'inherit';
+      if (taskToDo.parentNode.classList.contains('highlightedTask') && e.target !== taskToDo && e.target !== taskToDo.nextElementSibling) {
+        taskToDo.parentNode.classList.remove('highlightedTask');
         taskToDo.nextElementSibling.className = 'fa fa-ellipsis-v';
       }
     });
@@ -64,9 +61,9 @@ function populate() {
   allIconsTasksToDo.forEach((iconTaskToDo) => {
     iconTaskToDo.addEventListener('click', () => {
       if (iconTaskToDo.className === 'fa fa-trash-o fa-lg') {
-        iconTaskToDo.parentNode.style.backgroundColor = 'initial';
+        iconTaskToDo.parentNode.classList.remove('highlightedTask');
         iconTaskToDo.className = 'fa fa-ellipsis-v';
-        toDoList.removeTask(Number(iconTaskToDo.id.replace(/\D/g, '')));
+        toDoList.removeTask(idNumber(iconTaskToDo.id));
         populate();
       }
     });
@@ -74,25 +71,24 @@ function populate() {
 
   allCheckboxesTasksToDo.forEach((checkboxTaskToDo) => {
     checkboxTaskToDo.addEventListener('change', () => {
-      const checkboxIndex = Number(checkboxTaskToDo.id.replace(/\D/g, ''));
+      const checkboxIndex = idNumber(checkboxTaskToDo.id);
       if (checkboxTaskToDo.checked) {
-        toDoList.arrayTasks[checkboxIndex - 1].completed = true;
-        checkboxTaskToDo.nextElementSibling.style.color = 'rgb(175,175,175)';
+        toDoList.updateCheckbox(checkboxIndex, true);
         checkboxTaskToDo.nextElementSibling.classList.add('taskToDoChecked');
       } else {
-        toDoList.arrayTasks[checkboxIndex - 1].completed = false;
-        checkboxTaskToDo.nextElementSibling.style.color = 'inherit';
+        toDoList.updateCheckbox(checkboxIndex, false);
         checkboxTaskToDo.nextElementSibling.classList.remove('taskToDoChecked');
       }
-      localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
     });
   });
 
   document.querySelector('.footerText').addEventListener('click', () => {
-    deleteChecked(toDoList);
-    toDoList.arrayTasks = JSON.parse(localStorage.getItem('tasksData'));
+    toDoList.deleteChecked();
     populate();
   });
+
+  /*
+                  DRAG AND DROP FUNCTIONALITY            */
 
   let current = null;
 
@@ -101,10 +97,10 @@ function populate() {
 
     anyTask.addEventListener('dragstart', () => { current = anyTask; });
 
-    anyTask.addEventListener('dragover', (evt) => evt.preventDefault());
+    anyTask.addEventListener('dragover', (e) => e.preventDefault());
 
-    anyTask.addEventListener('drop', (evt) => {
-      evt.preventDefault();
+    anyTask.addEventListener('drop', (e) => {
+      e.preventDefault();
       if (anyTask !== current) {
         let currentpos = 0; let
           droppedpos = 0;
@@ -138,6 +134,10 @@ function populate() {
       }
     });
   });
+
+  /*
+
+            END OF DRAG AND DROP FUNCTIONALITY            */
 }
 
 populate();

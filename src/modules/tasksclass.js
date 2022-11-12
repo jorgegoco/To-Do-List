@@ -27,6 +27,19 @@ export default class Tasks {
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
 
+  updateCheckbox = (index, condition) => {
+    this.arrayTasks[index - 1].completed = condition;
+    localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
+  }
+
+  deleteChecked = () => {
+    this.arrayTasks = this.arrayTasks.filter((task) => task.completed === false);
+    for (let i = 0; i < this.arrayTasks.length; i += 1) {
+      this.arrayTasks[i].index = i + 1;
+    }
+    localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
+  }
+
   showDescriptions = () => {
     const descriptions = [];
     for (let i = 0; i < this.arrayTasks.length; i += 1) {
