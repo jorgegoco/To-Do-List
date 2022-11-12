@@ -92,6 +92,10 @@ body {
   column-gap: 2%;
 }
 
+.highlightedTask {
+  background-color: rgb(255, 255, 200);
+}
+
 .checkbox {
   width: 22px;
   height: 22px;
@@ -107,6 +111,7 @@ body {
 
 .taskToDoChecked {
   text-decoration: line-through;
+  color: rgb(175,175,175);
 }
 
 .taskToDo:focus {
