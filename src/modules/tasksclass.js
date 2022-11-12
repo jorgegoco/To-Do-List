@@ -40,6 +40,29 @@ export default class Tasks {
     localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
   }
 
+  swapTasks = (currentpos, droppedpos) => {
+    if (currentpos < droppedpos) {
+      for (let i = currentpos; i < droppedpos; i += 1) {
+        const temp = this.arrayTasks[i];
+        this.arrayTasks[i] = this.arrayTasks[i + 1];
+        this.arrayTasks[i + 1] = temp;
+      }
+      for (let i = 0; i < this.arrayTasks.length; i += 1) {
+        this.arrayTasks[i].index = i + 1;
+      }
+    } else {
+      for (let i = currentpos; i > droppedpos; i -= 1) {
+        const temp = this.arrayTasks[i];
+        this.arrayTasks[i] = this.arrayTasks[i - 1];
+        this.arrayTasks[i - 1] = temp;
+      }
+      for (let i = 0; i < this.arrayTasks.length; i += 1) {
+        this.arrayTasks[i].index = i + 1;
+      }
+    }
+    localStorage.setItem('tasksData', JSON.stringify(this.arrayTasks));
+  }
+
   showDescriptions = () => {
     const descriptions = [];
     for (let i = 0; i < this.arrayTasks.length; i += 1) {

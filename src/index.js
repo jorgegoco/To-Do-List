@@ -87,8 +87,7 @@ function populate() {
     populate();
   });
 
-  /*
-                  DRAG AND DROP FUNCTIONALITY            */
+  //                DRAG AND DROP FUNCTIONALITY
 
   let current = null;
 
@@ -104,40 +103,17 @@ function populate() {
       if (anyTask !== current) {
         let currentpos = 0; let
           droppedpos = 0;
-        for (let it = 0; it < allTasks.length; it += 1) {
-          if (current === allTasks[it]) { currentpos = it; }
-          if (anyTask === allTasks[it]) { droppedpos = it; }
+        for (let i = 0; i < allTasks.length; i += 1) {
+          if (current === allTasks[i]) { currentpos = i; }
+          if (anyTask === allTasks[i]) { droppedpos = i; }
         }
-        if (currentpos < droppedpos) {
-          for (let j = currentpos; j < droppedpos; j += 1) {
-            const temp = toDoList.arrayTasks[j];
-            toDoList.arrayTasks[j] = toDoList.arrayTasks[j + 1];
-            toDoList.arrayTasks[j + 1] = temp;
-          }
-          for (let j = 0; j < toDoList.arrayTasks.length; j += 1) {
-            toDoList.arrayTasks[j].index = j + 1;
-          }
-          localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
-          populate();
-        } else {
-          for (let j = currentpos; j > droppedpos; j -= 1) {
-            const temp = toDoList.arrayTasks[j];
-            toDoList.arrayTasks[j] = toDoList.arrayTasks[j - 1];
-            toDoList.arrayTasks[j - 1] = temp;
-          }
-          for (let j = 0; j < toDoList.arrayTasks.length; j += 1) {
-            toDoList.arrayTasks[j].index = j + 1;
-          }
-          localStorage.setItem('tasksData', JSON.stringify(toDoList.arrayTasks));
-          populate();
-        }
+        toDoList.swapTasks(currentpos, droppedpos);
+        populate();
       }
     });
   });
 
-  /*
-
-            END OF DRAG AND DROP FUNCTIONALITY            */
+  //            END OF DRAG AND DROP FUNCTIONALITY
 }
 
 populate();
