@@ -123,3 +123,5 @@ document.querySelector('.addTaskText').addEventListener('change', (e) => {
   e.target.value = '';
   populate();
 });
+
+export { toDoList };
