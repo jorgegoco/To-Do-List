@@ -16,5 +16,4 @@ describe('Test the "add" and "remove" functions in the "Tasks" class', () => {
     newToDoList.removeTask(1);
     expect(newToDoList.arrayTasks.length).toBe(0);
   });
-
 });
