@@ -32,4 +32,27 @@ describe('Test the CRUD functions in the "Tasks" class', () => {
     expect(newToDoList.arrayTasks[0].completed).toBe(false);
     newToDoList.removeTask(1);
   });
+  
+  test('"deleteChecked" function', () => {
+    newToDoList.addTask('task1');
+    newToDoList.addTask('task2');
+    newToDoList.addTask('task3');
+    newToDoList.updateCheckbox(1, true);
+    newToDoList.updateCheckbox(3, true);
+    newToDoList.deleteChecked();
+    expect(newToDoList.arrayTasks.length).toBe(1);
+    expect(newToDoList.arrayTasks[0].description).toBe('task2');
+    newToDoList.removeTask(1);
+  });
+
+  test('"swapTasks" function', () => {
+    newToDoList.addTask('task1');
+    newToDoList.addTask('task2');
+    newToDoList.addTask('task3');
+    newToDoList.swapTasks(0, 2);
+    expect(newToDoList.arrayTasks[0].description).toBe('task2');
+    expect(newToDoList.arrayTasks[1].description).toBe('task3');
+    expect(newToDoList.arrayTasks[2].description).toBe('task1');
+  });
+
 });
