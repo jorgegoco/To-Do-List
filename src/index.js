@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import './style.css';
 import Tasks from './modules/tasksclass.js';
 import idNumber from './modules/utilities.js';
@@ -123,3 +124,5 @@ document.querySelector('.addTaskText').addEventListener('change', (e) => {
   e.target.value = '';
   populate();
 });
+
+export { toDoList };
