@@ -32,7 +32,7 @@ describe('Test the CRUD functions in the "Tasks" class', () => {
     expect(newToDoList.arrayTasks[0].completed).toBe(false);
     newToDoList.removeTask(1);
   });
-  
+
   test('"deleteChecked" function', () => {
     newToDoList.addTask('task1');
     newToDoList.addTask('task2');
@@ -54,5 +54,4 @@ describe('Test the CRUD functions in the "Tasks" class', () => {
     expect(newToDoList.arrayTasks[1].description).toBe('task3');
     expect(newToDoList.arrayTasks[2].description).toBe('task1');
   });
-
 });
